@@ -27,7 +27,7 @@ TEST_COORDS_33 = []
 
 # parses city data to list of touples
 with open ('city.csv', 'r') as f:
-	TEST_COORDS_33 = [tuple(map(int,line)) for line in csv.reader(f)]
+	TEST_COORDS_33 = [tuple(map(float,line)) for line in csv.reader(f)]
 
 print (TEST_COORDS_33)
 
@@ -51,7 +51,7 @@ def dist(a, b):
     """Return the distance between two points represeted as a 2-tuple."""
     return math.sqrt((a[1] - b[1]) ** 2 + (a[0] - b[0]) ** 2)
 
-def run_demo(nodes, *args, **kwargs):
+def main_code (nodes, *args, **kwargs):
     world = World(nodes, dist)
     solver = Solver(**kwargs)
 
@@ -183,4 +183,4 @@ if __name__ == '__main__':
         33: TEST_COORDS_33
     }[args.dataset]
 
-    run_demo(nodes, **args.__dict__)
+    main_code (nodes, **args.__dict__)
