@@ -27,9 +27,9 @@ TEST_COORDS_33 = []
 
 # parses city data to list of touples
 with open ('city.csv', 'r') as f:
-	TEST_COORDS_33 = [tuple(map(float,line)) for line in csv.reader(f)]
+    TEST_COORDS_33 = [tuple(map(float,line)) for line in csv.reader(f)]
 
-print (TEST_COORDS_33)
+#print (TEST_COORDS_33)
 
 # 45-45-90 triangle with unit length legs.
 TEST_COORDS_3 = [
@@ -82,10 +82,18 @@ def main_code (nodes, *args, **kwargs):
         print(columns.format(fastest_time, ant.distance))
     total_time = timedelta(seconds=(time.time() - start_time))
     
+    answer = []
+
     print(divider)
     print("Best solution:")
     for i, n in zip(fastest.visited, fastest.tour):
         print("  {:>8} = {}".format(i, n))
+        answer.append(n)
+
+    #print solution to .csv file
+    with open ('solution.csv', 'w') as f:
+        writer = csv.writer(f, lineterminator = '\n')
+        writer.writerows(answer)
     
     print("Solution length: {}".format(fastest.distance))
     print("Found at {} out of {} seconds.".format(fastest_time, total_time))
@@ -105,7 +113,7 @@ if __name__ == '__main__':
         ])
     
     parser = argparse.ArgumentParser(
-        description='Script that demos the ACO-Pants package.',
+        description='Script that uses the ACO-Pants package.',
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter
         )
@@ -170,7 +178,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-d', '--dataset', 
         type=int, default=33, choices=[3, 4, 5, 33],
-        help='specify a particular set of demo data; default=%(default)s',
+        help='specify a particular set of data; default=%(default)s',
         metavar='D'
         )
         
