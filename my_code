@@ -83,25 +83,25 @@ def main_code (nodes, *args, **kwargs):
         print(columns.format(fastest_time, ant.distance))
     total_time = timedelta(seconds=(time.time() - start_time))
 
-    answer = []
+    solution = []
 
-    #print best (posible) solution
+    #print best (possible) solution
     print(divider)
     print("Best solution:")
     for i, n in zip(fastest.visited, fastest.tour):
         print("  {:>8} = {}".format(i, n))
-        answer.append(n)
+        solution.append(n)
 
     #print solution to .csv file
     with open ('solution.csv', 'w') as f:
         writer = csv.writer(f, lineterminator = '\n')
-        writer.writerows(answer)
+        writer.writerows(solution)
 
     #show path graph on a canvas
     import matplotlib.pyplot as plt
 
-    x_val = [x[1] for x in COORDS]
-    y_val = [x[0] for x in COORDS]
+    x_val = [x[1] for x in solution]
+    y_val = [x[0] for x in solution]
 
     plt.plot(x_val, y_val)
     plt.plot(x_val, y_val, 'or')
