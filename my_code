@@ -25,11 +25,24 @@ from pants import Solver
 ]'''
 
 COORDS = []
-# parses city data to list of touples
+# parse city data to list of touples
 with open ('city.csv', 'r') as f:
     readcsv = csv.reader(f, delimiter = ',')
     for row in readcsv:
         COORDS.append((float(row[0]), float(row[1])))
+
+#Remove duplicate tuples, if any
+for a in range(len(COORDS)):
+    tempx0 = [x[0] for x in COORDS[a:a+1]]
+    tempx1 = [x[1] for x in COORDS[a:a+1]]
+    for b in range(len(COORDS)):
+        tempy0 = [y[0] for y in COORDS[b:b+1]]
+        tempy1 = [y[1] for y in COORDS[b:b+1]]
+        if tempx0 == tempy0 and tempx1 == tempy1 :
+            if a != b:
+                print ('\nDuplicate tuple removed: >', COORDS[a:a+1])
+                del COORDS[a:a+1]
+
 nodes = COORDS
 
 # 45-45-90 triangle with unit length legs.
@@ -57,7 +70,7 @@ def main_code (nodes, *args, **kwargs):
     solver = Solver(**kwargs)
 
     solver_setting_report_format = "\n".join([
-        "Solver settings:",
+        "\nSolver settings:",
         "limit={w.limit}",
         "rho={w.rho}, Q={w.q}",
         "alpha={w.alpha}, beta={w.beta}",
