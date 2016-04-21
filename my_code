@@ -23,11 +23,13 @@ from pants import Solver
     (34.068647, -84.283569), (34.071628, -84.265784), (34.105840, -84.216670),
     (34.109645, -84.177031), (34.116852, -84.163971), (34.118162, -84.164704)
 ]'''
-COORDS = []
 
+COORDS = []
 # parses city data to list of touples
 with open ('city.csv', 'r') as f:
-    COORDS = [tuple(map(float,line)) for line in csv.reader(f)]
+    readcsv = csv.reader(f, delimiter = ',')
+    for row in readcsv:
+        COORDS.append((float(row[0]), float(row[1])))
 
 #print (COORDS)
 nodes = COORDS
