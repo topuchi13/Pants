@@ -2,6 +2,7 @@
 import time
 import math
 import argparse
+import inspect
 import sys
 import csv
 from datetime import timedelta
@@ -51,6 +52,7 @@ def dist(a, b):
     return math.sqrt((a[1] - b[1]) ** 2 + (a[0] - b[0]) ** 2)
 
 def main_code (nodes, *args, **kwargs):
+
     world = World(nodes, dist)
     solver = Solver(**kwargs)
 
@@ -61,6 +63,7 @@ def main_code (nodes, *args, **kwargs):
         "alpha={w.alpha}, beta={w.beta}",
         "elite={w.elite}"
         ])
+
 
     print(solver_setting_report_format.format(w=solver))
 
@@ -92,7 +95,7 @@ def main_code (nodes, *args, **kwargs):
         solution.append(n)
 
     #print solution to .csv file
-    with open ('solution.csv', 'w') as f:
+    with open ('./results/cities_' + str(len(COORDS)) + '_L_' + str(solver.limit) + '.txt', 'w') as f:
         writer = csv.writer(f, lineterminator = '\n')
         writer.writerows(solution)
 
@@ -183,7 +186,7 @@ if __name__ == '__main__':
         )
     parser.add_argument(
         '-c', '--count', dest='ant_count',
-        type=int, default=10,
+        type=int, default=20,
         help=('number of ants used in each iteration (N > 0); '
             'default=%(default)s'),
         metavar='N'
